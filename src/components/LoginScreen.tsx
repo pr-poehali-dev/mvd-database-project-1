@@ -67,9 +67,7 @@ export default function LoginScreen({ onLogin }: Props) {
                     className="w-full bg-muted border border-border rounded pl-9 pr-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary transition-colors"
                     placeholder="МВД-77-0412" />
                 </div>
-                <p className="text-xs text-muted-foreground/70 mt-1.5">
-                  Инспектор: МВД-77-0412 · Начальник: МВД-77-0501 · Пароль: 1234
-                </p>
+
               </div>
               <div>
                 <label className="block text-xs font-medium text-muted-foreground mb-1.5 tracking-wider uppercase">Пароль</label>

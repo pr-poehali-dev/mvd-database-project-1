@@ -62,6 +62,22 @@ export interface LogEntry {
   type: string;
 }
 
+export interface Case {
+  id: string;
+  number: string;
+  title: string;
+  description: string;
+  status: "open" | "suspended" | "closed";
+  priority: "low" | "medium" | "high";
+  category: string;
+  assignedTo: string;
+  createdBy: string;
+  createdAt: string;
+  updatedAt: string;
+  documentIds: string[];
+  profileIds: string[];
+}
+
 export interface FaceCheck {
   id: string;
   photoUrl: string;
@@ -171,6 +187,28 @@ export const store = {
     const logs = store.getLogs();
     const log: LogEntry = { ...entry, id: genId("L"), time: new Date().toLocaleString("ru-RU") };
     save("mvd_logs", [log, ...logs].slice(0, 200));
+  },
+
+  // Cases
+  getCases: (): Case[] => load<Case[]>("mvd_cases", []),
+
+  addCase: (data: Omit<Case, "id" | "createdAt" | "updatedAt">) => {
+    const cases = store.getCases();
+    const now = new Date().toLocaleString("ru-RU");
+    const c: Case = { ...data, id: genId("C"), createdAt: now, updatedAt: now };
+    save("mvd_cases", [...cases, c]);
+    return c;
+  },
+
+  updateCase: (id: string, data: Partial<Case>) => {
+    const cases = store.getCases().map((c) =>
+      c.id === id ? { ...c, ...data, updatedAt: new Date().toLocaleString("ru-RU") } : c
+    );
+    save("mvd_cases", cases);
+  },
+
+  deleteCase: (id: string) => {
+    save("mvd_cases", store.getCases().filter((c) => c.id !== id));
   },
 
   // Face checks

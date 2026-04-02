@@ -8,21 +8,23 @@ import SectionStats from "@/components/sections/SectionStats";
 import SectionAdmin from "@/components/sections/SectionAdmin";
 import SectionFace from "@/components/sections/SectionFace";
 import SectionMail from "@/components/sections/SectionMail";
+import SectionCases from "@/components/sections/SectionCases";
 import { store, canViewStats, ROLE_LABELS, type Employee } from "@/lib/store";
 
-type Section = "profiles" | "documents" | "search" | "face" | "mail" | "history" | "stats" | "admin";
+type Section = "profiles" | "documents" | "cases" | "search" | "face" | "mail" | "history" | "stats" | "admin";
 
 interface NavItem { id: Section; label: string; icon: string; chiefOnly?: boolean }
 
 const NAV: NavItem[] = [
-  { id: "profiles", label: "Профили", icon: "Users" },
-  { id: "documents", label: "Документы", icon: "FileText" },
-  { id: "search", label: "Поиск", icon: "Search" },
-  { id: "face", label: "Сверка по лицу", icon: "ScanFace" },
-  { id: "mail", label: "Внутренняя почта", icon: "Mail" },
-  { id: "history", label: "История", icon: "ClipboardList" },
-  { id: "stats", label: "Статистика", icon: "BarChart2", chiefOnly: true },
-  { id: "admin", label: "Администрирование", icon: "Settings" },
+  { id: "profiles",  label: "Профили",           icon: "Users"        },
+  { id: "documents", label: "Документы",          icon: "FileText"     },
+  { id: "cases",     label: "Дела",               icon: "FolderOpen"   },
+  { id: "search",    label: "Поиск",              icon: "Search"       },
+  { id: "face",      label: "Сверка по лицу",     icon: "ScanFace"     },
+  { id: "mail",      label: "Внутренняя почта",   icon: "Mail"         },
+  { id: "history",   label: "История",            icon: "ClipboardList"},
+  { id: "stats",     label: "Статистика",         icon: "BarChart2",   chiefOnly: true },
+  { id: "admin",     label: "Администрирование",  icon: "Settings"     },
 ];
 
 interface Props {
@@ -57,6 +59,7 @@ export default function Dashboard({ user, onLogout }: Props) {
     switch (active) {
       case "profiles": return <SectionProfiles user={user} />;
       case "documents": return <SectionDocuments user={user} />;
+      case "cases": return <SectionCases user={user} />;
       case "search": return <SectionSearch />;
       case "face": return <SectionFace user={user} />;
       case "mail": return <SectionMail user={user} onUnreadChange={setUnreadMail} />;
