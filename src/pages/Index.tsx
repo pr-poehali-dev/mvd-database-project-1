@@ -1,24 +1,14 @@
 import { useState } from "react";
 import LoginScreen from "@/components/LoginScreen";
 import Dashboard from "@/components/Dashboard";
+import type { Employee } from "@/lib/store";
 
 export default function Index() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [currentUser, setCurrentUser] = useState<{ name: string; role: string; badge: string } | null>(null);
+  const [currentUser, setCurrentUser] = useState<Employee | null>(null);
 
-  const handleLogin = (user: { name: string; role: string; badge: string }) => {
-    setCurrentUser(user);
-    setIsAuthenticated(true);
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    setCurrentUser(null);
-  };
-
-  if (!isAuthenticated) {
-    return <LoginScreen onLogin={handleLogin} />;
+  if (!currentUser) {
+    return <LoginScreen onLogin={setCurrentUser} />;
   }
 
-  return <Dashboard user={currentUser!} onLogout={handleLogout} />;
+  return <Dashboard user={currentUser} onLogout={() => setCurrentUser(null)} />;
 }
